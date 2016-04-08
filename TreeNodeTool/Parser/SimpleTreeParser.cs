@@ -11,7 +11,7 @@ namespace UnityRPG{
     {
 
         //Load the tree store from a simple file list (not json)
-        public static TreeStore LoadTreeStoreFromSimpleManifest(string manifestSimple)
+        public static TreeStore LoadTreeStoreFromSimpleManifest(string path, string manifestSimple)
         {
 
             TreeStore ts = new TreeStore();
@@ -23,9 +23,8 @@ namespace UnityRPG{
                 foreach (var line in lineArray.ToList<String>())
                 {
                     string[] treeArray = line.Split(';');
-                    curFileName = treeArray[0];
-					string fileText = ""; //load the file from manifest name.
-                    //TextAsset treeText = Resources.Load<TextAsset>(treeArray[0]);
+                    curFileName = path + "/" + treeArray[0] + ".txt";
+					string fileText = File.ReadAllText(curFileName);
 
 					ITree tempTree = SimpleTreeParser.getTreeFromString(fileText, (TreeType)Int32.Parse(treeArray[1]), ts.globalFlags);
                     tempTree.treeName = treeArray[2];
@@ -37,7 +36,8 @@ namespace UnityRPG{
             {
                 //Debug.Log(curFileName + ex.Message + ex.StackTrace);
                 string error = ex.Message + ex.StackTrace;
-                return null;
+				Console.WriteLine (error);
+				return null;
             }
 
             //select the first manifest item as current tree index
