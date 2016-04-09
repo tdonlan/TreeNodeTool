@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using UnityRPG;
 
+using Newtonsoft.Json;
+
 namespace TreeNodeTool
 {
 	class MainClass
@@ -15,7 +17,7 @@ namespace TreeNodeTool
 
 			TreeStore ts = loadSimpleFromDirectory (inPath);
 			if (ts != null) {
-				
+				exportTreeStore (ts, outPath);
 			}
 
 		}
@@ -33,6 +35,13 @@ namespace TreeNodeTool
 
 			}
 			return null;
+		}
+
+		public static void exportTreeStore(TreeStore ts, string path)
+		{
+
+			string treeStoreJSON = JsonConvert.SerializeObject (ts);
+			File.WriteAllText (path + "/treeStore.json", treeStoreJSON);
 		}
 	}
 }
