@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using TreeNodeTool;
+
 namespace UnityRPG
 {
 
@@ -16,6 +18,7 @@ namespace UnityRPG
         void SelectNode(long index);
         bool checkNode(long index);
         bool validateTreeLinks();
+		List<TreeStoreValidation> validate(TreeStore ts);
     }
 
     public interface ITreeNode
@@ -29,6 +32,8 @@ namespace UnityRPG
           List<TreeBranch> getBranchList(ITree t);
           List<string> getBranchListDisplay(ITree t);
           long getBranchIndex(int selected);
+
+
     }
 
     public interface ITreeNodeContent

@@ -47,6 +47,7 @@
     <Compile Include="Tree\TreeNode.cs" />
     <Compile Include="Tree\TreeStore.cs" />
     <Compile Include="Tree\ITree.cs" />
+    <Compile Include="TreeStoreValidation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
