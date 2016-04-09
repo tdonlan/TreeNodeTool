@@ -70,7 +70,7 @@ public class WorldTree : ITree
 	}
 
 
-	public List<TreeStoreValidation> validate (TreeStore ts)
+	public List<TreeStoreValidation> validate (TreeStore ts, GameDataSet gs)
 	{
 		List<TreeStoreValidation> validationList = new List<TreeStoreValidation> ();
 
@@ -91,6 +91,7 @@ public class WorldTree : ITree
 			} else if (linkedTree.treeType != TreeType.Zone) {
 				validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, node.ToString (), ValidationErrorType.MismatchedType));
 			}	
+				
 		}
 
 		return validationList;
@@ -184,7 +185,7 @@ public class ZoneTree : ITree
 		return validLinks;
 	}
 
-	public List<TreeStoreValidation> validate (TreeStore ts)
+	public List<TreeStoreValidation> validate (TreeStore ts, GameDataSet gs)
 	{
 		List<TreeStoreValidation> validationList = new List<TreeStoreValidation> ();
 
@@ -195,6 +196,17 @@ public class ZoneTree : ITree
 					validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, branch.ToString (), ValidationErrorType.MissingBranchLink));
 				}
 			}
+
+			//validate all external links are in manifest
+			//world nodes should always link to zone trees
+			var nodeContent = ((ZoneTreeNode)node).content;
+			var linkedTree = ts.getTree (nodeContent.linkIndex);
+			if (linkedTree == null) {
+				validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, node.ToString (), ValidationErrorType.MissingLink));
+			} else if (linkedTree.treeType != nodeContent.getTreeTypeMap ()) {
+				validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, node.ToString (), ValidationErrorType.MismatchedType));
+			}	
+			
 		}
 
 		return validationList;
@@ -266,7 +278,7 @@ public class DialogTree : ITree
 		return validLinks;
 	}
 
-	public List<TreeStoreValidation> validate (TreeStore ts)
+	public List<TreeStoreValidation> validate (TreeStore ts, GameDataSet gs)
 	{
 		List<TreeStoreValidation> validationList = new List<TreeStoreValidation> ();
 
@@ -385,7 +397,7 @@ public class QuestTree : ITree
 		return validLinks;
 	}
 
-	public List<TreeStoreValidation> validate (TreeStore ts)
+	public List<TreeStoreValidation> validate (TreeStore ts, GameDataSet gs)
 	{
 		List<TreeStoreValidation> validationList = new List<TreeStoreValidation> ();
 
@@ -509,7 +521,7 @@ public class BattleTree : ITree
 		return validLinks;
 	}
 
-	public List<TreeStoreValidation> validate (TreeStore ts)
+	public List<TreeStoreValidation> validate (TreeStore ts, GameDataSet gs)
 	{
 		List<TreeStoreValidation> validationList = new List<TreeStoreValidation> ();
 
@@ -578,7 +590,7 @@ public class InfoTree : ITree
 		return true;
 	}
 
-	public List<TreeStoreValidation> validate (TreeStore ts)
+	public List<TreeStoreValidation> validate (TreeStore ts, GameDataSet gs)
 	{
 		List<TreeStoreValidation> validationList = new List<TreeStoreValidation> ();
 
@@ -645,7 +657,7 @@ public class CutsceneTree : ITree
 		return true;
 	}
 
-	public List<TreeStoreValidation> validate (TreeStore ts)
+	public List<TreeStoreValidation> validate (TreeStore ts, GameDataSet gs)
 	{
 		List<TreeStoreValidation> validationList = new List<TreeStoreValidation> ();
 
@@ -853,7 +865,7 @@ public class StoreTree : ITree
 
 	*/
 
-	public List<TreeStoreValidation> validate (TreeStore ts)
+	public List<TreeStoreValidation> validate (TreeStore ts, GameDataSet gs)
 	{
 		List<TreeStoreValidation> validationList = new List<TreeStoreValidation> ();
 

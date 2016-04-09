@@ -16,11 +16,13 @@ namespace TreeNodeTool
 		{
 			string inPath = args [0];
 			string outPath = args [1];
+			string dataPath = args [2];
 
+			GameDataSet gs = new GameDataSet (dataPath);
 
 			TreeStore ts = loadSimpleFromDirectory (inPath);
 			if (ts != null) {
-				var validateList = ts.validate ();
+				var validateList = ts.validate (gs);
 				if (validateList.Count == 0) {
 					exportTreeStore (ts, outPath);
 				} else {

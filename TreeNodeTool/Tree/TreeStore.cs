@@ -86,11 +86,11 @@ namespace UnityRPG
 			return questStrLists;
 		}
 
-		public List<TreeStoreValidation> validate ()
+		public List<TreeStoreValidation> validate (GameDataSet gs)
 		{
 			List<TreeStoreValidation> validationList = new List<TreeStoreValidation> ();
 			foreach (var tree in treeDictionary.Values) {
-				validationList.AddRange (tree.validate (this));
+				validationList.AddRange (tree.validate (this, gs));
 			}
 
 			return validationList;

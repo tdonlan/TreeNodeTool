@@ -19,7 +19,7 @@
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
     <PlatformTarget>x86</PlatformTarget>
-    <Commandlineparameters>/Users/timdonlan/Projects/TreeNodeTool/Data/World1In /Users/timdonlan/Projects/TreeNodeTool/Data/World1Out</Commandlineparameters>
+    <Commandlineparameters>/Users/timdonlan/Projects/TreeNodeTool/Data/World1In /Users/timdonlan/Projects/TreeNodeTool/Data/World1Out /Users/timdonlan/Projects/TreeNodeTool/Data/GameData</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>full</DebugType>
@@ -35,6 +35,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="CsvHelper">
+      <HintPath>..\packages\CsvHelper.2.13.5.0\lib\net40-client\CsvHelper.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -48,6 +51,8 @@
     <Compile Include="Tree\TreeStore.cs" />
     <Compile Include="Tree\ITree.cs" />
     <Compile Include="TreeStoreValidation.cs" />
+    <Compile Include="GameObjects\DataLoader.cs" />
+    <Compile Include="GameObjects\LoadedData.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

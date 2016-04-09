@@ -8,38 +8,50 @@ using TreeNodeTool;
 namespace UnityRPG
 {
 
-    public interface ITree
-    {
-        string treeName { get; set; }
-        TreeType treeType { get; set; }
-        GlobalFlags globalFlags { get; set; }
+	public interface ITree
+	{
+		string treeName { get; set; }
 
-        ITreeNode getNode(long index);
-        void SelectNode(long index);
-        bool checkNode(long index);
-        bool validateTreeLinks();
-		List<TreeStoreValidation> validate(TreeStore ts);
-    }
+		TreeType treeType { get; set; }
 
-    public interface ITreeNode
-    {
-         long index { get; set; }
-         List<TreeBranch> branchList { get; set; }
-         List<TreeNodeFlagSet> flagSetList { get; set; }
-         List<TreeNodeAction> actionList { get; set; }
+		GlobalFlags globalFlags { get; set; }
 
-          void SelectNode(ITree t);
-          List<TreeBranch> getBranchList(ITree t);
-          List<string> getBranchListDisplay(ITree t);
-          long getBranchIndex(int selected);
+		ITreeNode getNode (long index);
+
+		void SelectNode (long index);
+
+		bool checkNode (long index);
+
+		bool validateTreeLinks ();
+
+		List<TreeStoreValidation> validate (TreeStore ts, GameDataSet gs);
+	}
+
+	public interface ITreeNode
+	{
+		long index { get; set; }
+
+		List<TreeBranch> branchList { get; set; }
+
+		List<TreeNodeFlagSet> flagSetList { get; set; }
+
+		List<TreeNodeAction> actionList { get; set; }
+
+		void SelectNode (ITree t);
+
+		List<TreeBranch> getBranchList (ITree t);
+
+		List<string> getBranchListDisplay (ITree t);
+
+		long getBranchIndex (int selected);
 
 
-    }
+	}
 
-    public interface ITreeNodeContent
-    {
+	public interface ITreeNodeContent
+	{
 
-    }
+	}
 
 
 }

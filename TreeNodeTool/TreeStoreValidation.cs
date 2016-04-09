@@ -7,6 +7,9 @@ namespace TreeNodeTool
 		MissingBranchLink,
 		MissingLink,
 		MismatchedType,
+		MissingItem,
+		MissingFlag,
+		MissingCharacter,
 		Other
 	}
 
