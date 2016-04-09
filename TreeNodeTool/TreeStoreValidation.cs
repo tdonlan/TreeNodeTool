@@ -1,4 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace TreeNodeTool
 {
@@ -20,6 +22,8 @@ namespace TreeNodeTool
 		public long nodeIndex;
 		public string line;
 		public string errorText;
+
+		[JsonConverter (typeof(StringEnumConverter))]
 		public ValidationErrorType errorType;
 
 		public TreeStoreValidation (string treeName, string nodeName, long nodeIndex, string line, ValidationErrorType type)

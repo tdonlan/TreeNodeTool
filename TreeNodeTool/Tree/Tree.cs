@@ -206,7 +206,8 @@ public class ZoneTree : ITree
 			} else if (linkedTree.treeType != nodeContent.getTreeTypeMap ()) {
 				validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, node.ToString (), ValidationErrorType.MismatchedType));
 			}	
-			
+
+
 		}
 
 		return validationList;
@@ -290,6 +291,21 @@ public class DialogTree : ITree
 				}
 			}
 
+			if (node.actionList != null) {
+				foreach (TreeNodeAction action in node.actionList) {
+					if (action.actionType == NodeActionType.AddItem || action.actionType == NodeActionType.RemoveItem) {
+						if (!gs.checkItemExists (action.index)) {
+							validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, action.ToString (), ValidationErrorType.MissingItem));
+						}
+					}
+
+					if (action.actionType == NodeActionType.AddCharacter || action.actionType == NodeActionType.RemoveCharacter) {
+						if (!gs.checkCharacterExists (action.index)) {
+							validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, action.ToString (), ValidationErrorType.MissingCharacter));
+						}
+					}
+				}
+			}
 		}
 
 		return validationList;
@@ -533,8 +549,30 @@ public class BattleTree : ITree
 				}
 			}
 
-			//verify enemies link to game data
-			//verify loot links to game data
+			var nodeContent = ((BattleTreeNode)node).content;
+			if (nodeContent.nodeType == BattleNodeType.Enemy) {
+				if (!gs.checkCharacterExists (nodeContent.linkIndex)) {
+					validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, nodeContent.ToString (), ValidationErrorType.MissingCharacter));
+				}
+			} 
+
+			if (node.actionList != null) {
+				foreach (TreeNodeAction action in node.actionList) {
+					if (action.actionType == NodeActionType.AddItem || action.actionType == NodeActionType.RemoveItem) {
+						if (!gs.checkItemExists (action.index)) {
+							validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, action.ToString (), ValidationErrorType.MissingItem));
+						}
+					}
+
+					if (action.actionType == NodeActionType.AddCharacter || action.actionType == NodeActionType.RemoveCharacter) {
+						if (!gs.checkCharacterExists (action.index)) {
+							validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, action.ToString (), ValidationErrorType.MissingCharacter));
+						}
+					}
+				}
+			}
+
+		
 		}
 
 		return validationList;
@@ -602,6 +640,21 @@ public class InfoTree : ITree
 				}
 			}
 			//verify loot links to game data
+
+			foreach (TreeNodeAction action in node.actionList) {
+				if (action.actionType == NodeActionType.AddItem || action.actionType == NodeActionType.RemoveItem) {
+					if (!gs.checkItemExists (action.index)) {
+						validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, action.ToString (), ValidationErrorType.MissingItem));
+					}
+				}
+
+				if (action.actionType == NodeActionType.AddCharacter || action.actionType == NodeActionType.RemoveCharacter) {
+					if (!gs.checkCharacterExists (action.index)) {
+						validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, action.ToString (), ValidationErrorType.MissingCharacter));
+					}
+				}
+			}
+
 		}
 
 		return validationList;
@@ -668,6 +721,23 @@ public class CutsceneTree : ITree
 					validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, branch.ToString (), ValidationErrorType.MissingBranchLink));
 				}
 			}
+			if (node.actionList != null) {
+
+				foreach (TreeNodeAction action in node.actionList) {
+					if (action.actionType == NodeActionType.AddItem || action.actionType == NodeActionType.RemoveItem) {
+						if (!gs.checkItemExists (action.index)) {
+							validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, action.ToString (), ValidationErrorType.MissingItem));
+						}
+					}
+
+					if (action.actionType == NodeActionType.AddCharacter || action.actionType == NodeActionType.RemoveCharacter) {
+						if (!gs.checkCharacterExists (action.index)) {
+							validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, action.ToString (), ValidationErrorType.MissingCharacter));
+						}
+					}
+				}
+			}
+
 				
 		}
 
@@ -878,6 +948,16 @@ public class StoreTree : ITree
 			}
 				
 			//verify loot links to game data
+			var nodeContent = ((StoreTreeNode)node).content;
+			if (nodeContent.nodeType == StoreNodeType.ItemIndex) {
+			
+			
+				if (!gs.checkItemExists (nodeContent.linkIndex)) {
+					validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, nodeContent.ToString (), ValidationErrorType.MissingItem));
+
+				}
+			
+			}
 		}
 
 		return validationList;
