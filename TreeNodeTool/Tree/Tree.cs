@@ -203,10 +203,11 @@ public class ZoneTree : ITree
 			var linkedTree = ts.getTree (nodeContent.linkIndex);
 			if (linkedTree == null) {
 				validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, node.ToString (), ValidationErrorType.MissingLink));
-			} else if (linkedTree.treeType != nodeContent.getTreeTypeMap ()) {
+			} else if (nodeContent.nodeType == ZoneNodeType.Link && linkedTree.treeType != TreeType.World && linkedTree.treeType != TreeType.Zone) {
 				validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, node.ToString (), ValidationErrorType.MismatchedType));
-			}	
-
+			} else if (nodeContent.nodeType != ZoneNodeType.Lock && nodeContent.nodeType != ZoneNodeType.Link && linkedTree.treeType != nodeContent.getTreeTypeMap ()) {
+				validationList.Add (new TreeStoreValidation (this.treeName, node.name, node.index, node.ToString (), ValidationErrorType.MismatchedType));
+			}
 
 		}
 
